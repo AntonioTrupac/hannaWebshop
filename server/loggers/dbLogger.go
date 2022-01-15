@@ -1,4 +1,4 @@
-package logDb
+package dbLogger
 
 import (
 	"gorm.io/gorm/logger"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func DbLog() logger.Interface {
+func LogGORM() logger.Interface {
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{

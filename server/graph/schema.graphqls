@@ -2,7 +2,6 @@
 #
 # https://gqlgen.com/getting-started/
 
-
 type User {
   id: ID!
   firstName: String!
@@ -14,15 +13,15 @@ type User {
 }
 
 type Query {
-  getUsers: [User!]
+  users: [User!]!
 }
 
 input UserInput {
   firstName: String!
   lastName: String!
-  age: Int!
+  age: String!
 }
 
 type Mutation {
-  createUser(userInput: UserInput!): User!
+  createUser(input: UserInput!): User!
 }
