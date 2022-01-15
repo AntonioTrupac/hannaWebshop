@@ -17,7 +17,7 @@ type User struct {
 }
 
 func Execute() (*gorm.DB, *sql.DB) {
-	db, err := sql.Open("mysql", "84oq5zrl3er9:pscale_pw_1aThg2_Feg_LwWBFcfq-ENYUDsxep_-uGHsXXQAev3Y@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true")
+	db, err := sql.Open("mysql", "84oq5zrl3er9:pscale_pw_1aThg2_Feg_LwWBFcfq-ENYUDsxep_-uGHsXXQAev3Y@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
 	gormDB, err := gorm.Open(mysql.New(mysql.Config{
 		Conn: db,
 	}), &gorm.Config{
