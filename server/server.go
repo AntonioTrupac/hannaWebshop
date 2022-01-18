@@ -54,7 +54,7 @@ func initDB() {
 		panic("FAILED TO CONNECT TO DB")
 	}
 
-	err = db.AutoMigrate(&model.User{})
+	err = db.AutoMigrate(&model.User{}, &model.Address{})
 
 	if err != nil {
 		fmt.Println(err)

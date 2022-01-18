@@ -2,8 +2,23 @@
 
 package model
 
+type Address struct {
+	ID      string `json:"id"`
+	City    string `json:"city"`
+	ZipCode int    `json:"zipCode"`
+}
+
+type User struct {
+	ID        string `json:"id"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Password  string `json:"password"`
+	Age       int    `json:"age"`
+}
+
 type UserInput struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
-	Age       string `json:"age"`
+	Password  string `json:"password"`
+	Age       int    `json:"age"`
 }

@@ -2,14 +2,24 @@
 #
 # https://gqlgen.com/getting-started/
 
+# in the schema we will be doing Query and Mutations
+schema {
+  query: Query
+  mutation: Mutation
+}
+
 type User {
   id: ID!
   firstName: String!
   lastName: String!
+  password: String!
   age: Int!
-  createdAt: String!
-  updatedAt: String!
-  deletedAt: String!
+}
+
+type Address {
+  id: ID!
+  city: String!
+  zipCode: Int!
 }
 
 type Query {
@@ -19,7 +29,8 @@ type Query {
 input UserInput {
   firstName: String!
   lastName: String!
-  age: String!
+  password: String!
+  age: Int!
 }
 
 type Mutation {
