@@ -21,7 +21,7 @@ import (
 
 const defaultPort = "8080"
 
-var db *gorm.DB
+var database *gorm.DB
 
 func main() {
 	port := os.Getenv("PORT")
@@ -30,7 +30,9 @@ func main() {
 	}
 
 	initDB()
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{
+		DB: database,
+	}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
@@ -42,8 +44,8 @@ func main() {
 func initDB() {
 	var err error
 
-	dbSql, err := sql.Open("mysql", "84oq5zrl3er9:pscale_pw_1aThg2_Feg_LwWBFcfq-ENYUDsxep_-uGHsXXQAev3Y@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
-	db, err := gorm.Open(mysql.New(mysql.Config{
+	dbSql, err := sql.Open("mysql", "amtzp95uzr55:pscale_pw_QjWjgFZkSxehW-WpWuMGSqFrRIdlMDrFHamSPpJ4274@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
+	database, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: dbSql,
 	}), &gorm.Config{
 		Logger: logDB.LogGORM(),
@@ -54,10 +56,11 @@ func initDB() {
 		panic("FAILED TO CONNECT TO DB")
 	}
 
-	err = db.AutoMigrate(&model.User{}, &model.Address{})
+	err = database.AutoMigrate(&model.User{}, &model.Address{})
 
 	if err != nil {
 		fmt.Println(err)
 		panic("MODELS NOT ADDED")
 	}
+
 }

@@ -9,7 +9,7 @@ schema {
 }
 
 type User {
-  id: ID!
+  id: Int!
   firstName: String!
   lastName: String!
   password: String!
@@ -17,7 +17,7 @@ type User {
 }
 
 type Address {
-  id: ID!
+  id: Int!
   city: String!
   zipCode: Int!
 }

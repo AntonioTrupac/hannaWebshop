@@ -6,17 +6,41 @@ package graph
 import (
 	"context"
 	"fmt"
-
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	"github.com/AntonioTrupac/hannaWebshop/graph/model"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	user := model.User{
+		FirstName: input.FirstName,
+		LastName:  input.LastName,
+		Age:       input.Age,
+		Password:  input.Password,
+	}
+
+	if r == nil {
+		fmt.Println("BILO KAJ")
+	}
+
+	if r.DB == nil {
+		fmt.Println("BILO KAJ r.DB")
+	}
+	err := r.DB.Create(&user).Error
+
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &user, nil
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
+	var users []*model.User
+
+	r.DB.Find(&users)
+
+	return users, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

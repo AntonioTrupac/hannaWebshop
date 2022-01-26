@@ -3,13 +3,13 @@
 package model
 
 type Address struct {
-	ID      string `json:"id"`
+	ID      int    `json:"id"`
 	City    string `json:"city"`
 	ZipCode int    `json:"zipCode"`
 }
 
 type User struct {
-	ID        string `json:"id"`
+	ID        int    `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Password  string `json:"password"`

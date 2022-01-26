@@ -1,7 +1,6 @@
 package graph
 
 import (
-	"github.com/AntonioTrupac/hannaWebshop/graph/model"
 	"gorm.io/gorm"
 )
 
@@ -11,6 +10,15 @@ import (
 
 //go:generate go run github.com/99designs/gqlgen
 type Resolver struct {
-	users []*model.User
-	DB    *gorm.DB
+	DB *gorm.DB
+}
+
+func New(DB *gorm.DB) *Resolver {
+	if DB == nil {
+		panic("DB IS BROKEN")
+	}
+
+	return &Resolver{
+		DB,
+	}
 }
