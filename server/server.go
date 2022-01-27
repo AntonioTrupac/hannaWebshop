@@ -3,18 +3,17 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/AntonioTrupac/hannaWebshop/graph/resolver"
+	"github.com/AntonioTrupac/hannaWebshop/service/users"
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/AntonioTrupac/hannaWebshop/graph/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/AntonioTrupac/hannaWebshop/graph"
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	logDB "github.com/AntonioTrupac/hannaWebshop/loggers"
 )
@@ -30,9 +29,8 @@ func main() {
 	}
 
 	initDB()
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{
-		DB: database,
-	}}))
+	usersService := users.New(database)
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver.NewResolver(usersService)}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
@@ -44,7 +42,7 @@ func main() {
 func initDB() {
 	var err error
 
-	dbSql, err := sql.Open("mysql", "amtzp95uzr55:pscale_pw_QjWjgFZkSxehW-WpWuMGSqFrRIdlMDrFHamSPpJ4274@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
+	dbSql, err := sql.Open("mysql", "bqs6is44d47k:pscale_pw_VNAShKEIdm7uDNBr_T1cReLRiloP6dInRfyzoPI0S8s@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
 	database, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: dbSql,
 	}), &gorm.Config{
@@ -56,11 +54,10 @@ func initDB() {
 		panic("FAILED TO CONNECT TO DB")
 	}
 
-	err = database.AutoMigrate(&model.User{}, &model.Address{})
+	err = database.AutoMigrate(&generated.User{}, &generated.Address{})
 
 	if err != nil {
 		fmt.Println(err)
 		panic("MODELS NOT ADDED")
 	}
-
 }
