@@ -5,24 +5,24 @@ package resolver
 
 import (
 	"context"
-	"github.com/AntonioTrupac/hannaWebshop/graph/mapper"
-
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
+	"github.com/AntonioTrupac/hannaWebshop/graph/mapper"
+	"github.com/AntonioTrupac/hannaWebshop/graph/types"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input generated.UserInput) (*generated.User, error) {
-	user := generated.User{
-		FirstName: input.FirstName,
-		LastName:  input.LastName,
-		Age:       input.Age,
-		Password:  input.Password,
+	user := types.ModelUser(ctx, input)
+
+	err := r.users.CreateAUser(user)
+
+	if err != nil {
+		return nil, err
 	}
 
-	return &user, nil
+	return mapper.GeneratedUser(user), nil
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*generated.User, error) {
-
 	users, err := r.users.GetUsers()
 
 	if err != nil {

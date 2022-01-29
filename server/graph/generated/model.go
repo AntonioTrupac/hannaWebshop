@@ -12,13 +12,13 @@ type User struct {
 	ID        int    `json:"id"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
-	Password  string `json:"password"`
 	Age       int    `json:"age"`
+	Email     string `json:"email"`
 }
 
 type UserInput struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
-	Password  string `json:"password"`
 	Age       int    `json:"age"`
+	Email     string `json:"email"`
 }

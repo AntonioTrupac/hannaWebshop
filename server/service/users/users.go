@@ -1,14 +1,15 @@
 package users
 
 import (
+	"fmt"
 	"github.com/AntonioTrupac/hannaWebshop/model"
 	"gorm.io/gorm"
 )
 
 type Service interface {
 	GetUsers() ([]*model.User, error)
+	CreateAUser(input *model.User) error
 }
-
 type users struct {
 	DB *gorm.DB
 }
@@ -28,4 +29,14 @@ func (u *users) GetUsers() ([]*model.User, error) {
 	}
 
 	return users, nil
+}
+
+func (u *users) CreateAUser(input *model.User) error {
+
+	if err := u.DB.Create(input).Error; err != nil {
+		fmt.Printf("Error %s", err)
+		return err
+	}
+
+	return nil
 }

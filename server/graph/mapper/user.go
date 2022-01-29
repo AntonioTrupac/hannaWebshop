@@ -19,3 +19,12 @@ func Users(users []*model.User) []*generated.User {
 
 	return out
 }
+
+func GeneratedUser(user *model.User) *generated.User {
+	return &generated.User{
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Age:       int(user.Age),
+	}
+}

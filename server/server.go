@@ -42,7 +42,7 @@ func main() {
 func initDB() {
 	var err error
 
-	dbSql, err := sql.Open("mysql", "bqs6is44d47k:pscale_pw_VNAShKEIdm7uDNBr_T1cReLRiloP6dInRfyzoPI0S8s@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
+	dbSql, err := sql.Open("mysql", "e3as53baoujr:pscale_pw_-FP67XNcWA9wEnYtVEAYKSKGzOlbzej-ETam_vFurtU@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
 	database, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: dbSql,
 	}), &gorm.Config{

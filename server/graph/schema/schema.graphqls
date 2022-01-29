@@ -12,8 +12,8 @@ type User {
   id: Int!
   firstName: String!
   lastName: String!
-  password: String!
   age: Int!
+  email: String!
 }
 
 type Address {
@@ -29,8 +29,8 @@ type Query {
 input UserInput {
   firstName: String!
   lastName: String!
-  password: String!
   age: Int!
+  email: String!
 }
 
 type Mutation {
