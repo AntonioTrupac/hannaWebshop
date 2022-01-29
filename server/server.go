@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/AntonioTrupac/hannaWebshop/graph/resolver"
 	"github.com/AntonioTrupac/hannaWebshop/service/users"
+	"github.com/joho/godotenv"
 	"log"
 	"net/http"
 	"os"
@@ -23,6 +24,12 @@ const defaultPort = "8080"
 var database *gorm.DB
 
 func main() {
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
@@ -41,8 +48,13 @@ func main() {
 
 func initDB() {
 	var err error
+	dsn := os.Getenv("DSN")
 
-	dbSql, err := sql.Open("mysql", "e3as53baoujr:pscale_pw_-FP67XNcWA9wEnYtVEAYKSKGzOlbzej-ETam_vFurtU@tcp(kqmwg2ezxey8.eu-west-3.psdb.cloud)/hannawebshop?tls=true&charset=utf8&parseTime=true&loc=Local")
+	if dsn == "" {
+		log.Fatalf("DSN string is empty")
+	}
+
+	dbSql, err := sql.Open("mysql", dsn)
 	database, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: dbSql,
 	}), &gorm.Config{
