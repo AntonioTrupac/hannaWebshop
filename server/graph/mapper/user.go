@@ -20,11 +20,28 @@ func Users(users []*model.User) []*generated.User {
 	return out
 }
 
+func mapGeneratedAddressesToUser(addressInput []model.Address) []*generated.Address {
+	var addresses []*generated.Address
+
+	for _, addressInput := range addressInput {
+		addresses = append(addresses, &generated.Address{
+			PostalCode:  addressInput.PostalCode,
+			Country:     addressInput.Country,
+			City:        addressInput.City,
+			AddressLine: addressInput.AddressLine,
+		})
+	}
+
+	return addresses
+}
+
 func GeneratedUser(user *model.User) *generated.User {
 	return &generated.User{
 		Email:     user.Email,
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Age:       int(user.Age),
+		Phone:     user.Phone,
+		Address:   mapGeneratedAddressesToUser(user.Address),
 	}
 }

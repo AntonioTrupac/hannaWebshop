@@ -34,7 +34,7 @@ func (u *users) GetUsers() ([]*model.User, error) {
 func (u *users) CreateAUser(input *model.User) error {
 
 	if err := u.DB.Create(input).Error; err != nil {
-		fmt.Printf("Error %s", err)
+		fmt.Printf("Error %s, %v", err, input)
 		return err
 	}
 

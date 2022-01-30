@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/AntonioTrupac/hannaWebshop/graph/resolver"
+	"github.com/AntonioTrupac/hannaWebshop/model"
 	"github.com/AntonioTrupac/hannaWebshop/service/users"
 	"github.com/joho/godotenv"
 	"log"
@@ -32,7 +33,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = defaultPort
+		panic("Cannot read port from environment!")
 	}
 
 	initDB()
@@ -58,7 +59,8 @@ func initDB() {
 	database, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: dbSql,
 	}), &gorm.Config{
-		Logger: logDB.LogGORM(),
+		Logger:                                   logDB.LogGORM(),
+		DisableForeignKeyConstraintWhenMigrating: true,
 	})
 
 	if err != nil {
@@ -66,10 +68,22 @@ func initDB() {
 		panic("FAILED TO CONNECT TO DB")
 	}
 
-	err = database.AutoMigrate(&generated.User{}, &generated.Address{})
+	err = migrate(database)
+	if err != nil {
+		return
+	}
 
 	if err != nil {
 		fmt.Println(err)
 		panic("MODELS NOT ADDED")
 	}
+}
+
+func migrate(db *gorm.DB) error {
+	err := db.AutoMigrate(&model.User{}, &model.Address{})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
