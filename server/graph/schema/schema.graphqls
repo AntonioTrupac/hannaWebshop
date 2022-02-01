@@ -14,16 +14,28 @@ type User {
   lastName: String!
   age: Int!
   email: String!
+  phone: String!
+  address: [Address!]!
 }
 
 type Address {
   id: Int!
+  addressLine: String!
   city: String!
-  zipCode: Int!
+  postalCode: Int!
+  country: String!
+  userId: Int!
 }
 
 type Query {
   users: [User!]!
+}
+
+input AddressInput {
+  addressLine: String!
+  city: String!
+  postalCode: Int!
+  country: String!
 }
 
 input UserInput {
@@ -31,6 +43,8 @@ input UserInput {
   lastName: String!
   age: Int!
   email: String!
+  phone: String!
+  address: [AddressInput!]!
 }
 
 type Mutation {

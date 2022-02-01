@@ -5,6 +5,7 @@ package resolver
 
 import (
 	"context"
+
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	"github.com/AntonioTrupac/hannaWebshop/graph/mapper"
 	"github.com/AntonioTrupac/hannaWebshop/graph/types"

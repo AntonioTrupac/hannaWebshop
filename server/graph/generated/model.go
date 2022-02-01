@@ -3,22 +3,36 @@
 package generated
 
 type Address struct {
-	ID      int    `json:"id"`
-	City    string `json:"city"`
-	ZipCode int    `json:"zipCode"`
+	ID          int    `json:"id"`
+	AddressLine string `json:"addressLine"`
+	City        string `json:"city"`
+	PostalCode  int    `json:"postalCode"`
+	Country     string `json:"country"`
+	UserID      int    `json:"userId"`
+}
+
+type AddressInput struct {
+	AddressLine string `json:"addressLine"`
+	City        string `json:"city"`
+	PostalCode  int    `json:"postalCode"`
+	Country     string `json:"country"`
 }
 
 type User struct {
-	ID        int    `json:"id"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Age       int    `json:"age"`
-	Email     string `json:"email"`
+	ID        int        `json:"id"`
+	FirstName string     `json:"firstName"`
+	LastName  string     `json:"lastName"`
+	Age       int        `json:"age"`
+	Email     string     `json:"email"`
+	Phone     string     `json:"phone"`
+	Address   []*Address `json:"address"`
 }
 
 type UserInput struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Age       int    `json:"age"`
-	Email     string `json:"email"`
+	FirstName string          `json:"firstName"`
+	LastName  string          `json:"lastName"`
+	Age       int             `json:"age"`
+	Email     string          `json:"email"`
+	Phone     string          `json:"phone"`
+	Address   []*AddressInput `json:"address"`
 }
