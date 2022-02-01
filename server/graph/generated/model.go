@@ -16,7 +16,6 @@ type AddressInput struct {
 	City        string `json:"city"`
 	PostalCode  int    `json:"postalCode"`
 	Country     string `json:"country"`
-	UserID      int    `json:"userId"`
 }
 
 type User struct {
@@ -26,7 +25,7 @@ type User struct {
 	Age       int        `json:"age"`
 	Email     string     `json:"email"`
 	Phone     string     `json:"phone"`
-	Address   []*Address `json:"Address"`
+	Address   []*Address `json:"address"`
 }
 
 type UserInput struct {

@@ -9,5 +9,5 @@ type User struct {
 	Email     string `gorm:"size:255;not null"`
 	Age       uint
 	Phone     string `gorm:"size:50;not null"`
-	Address   []Address
+	Address   []*Address
 }

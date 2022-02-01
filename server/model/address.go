@@ -10,3 +10,7 @@ type Address struct {
 	Country     string
 	UserId      int
 }
+
+func (a *Address) TableName() string {
+	return "addresses"
+}

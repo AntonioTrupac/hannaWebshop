@@ -153,7 +153,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Users(childComplexity), true
 
-	case "User.Address":
+	case "User.address":
 		if e.complexity.User.Address == nil {
 			break
 		}
@@ -283,7 +283,7 @@ type User {
   age: Int!
   email: String!
   phone: String!
-  Address: [Address!]!
+  address: [Address!]!
 }
 
 type Address {
@@ -304,7 +304,6 @@ input AddressInput {
   city: String!
   postalCode: Int!
   country: String!
-  userId: Int!
 }
 
 input UserInput {
@@ -963,7 +962,7 @@ func (ec *executionContext) _User_phone(ctx context.Context, field graphql.Colle
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _User_Address(ctx context.Context, field graphql.CollectedField, obj *User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_address(ctx context.Context, field graphql.CollectedField, obj *User) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2161,14 +2160,6 @@ func (ec *executionContext) unmarshalInputAddressInput(ctx context.Context, obj 
 			if err != nil {
 				return it, err
 			}
-		case "userId":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-			it.UserID, err = ec.unmarshalNInt2int(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		}
 	}
 
@@ -2504,9 +2495,9 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "Address":
+		case "address":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._User_Address(ctx, field, obj)
+				return ec._User_address(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)

@@ -6,16 +6,15 @@ import (
 	"github.com/AntonioTrupac/hannaWebshop/model"
 )
 
-func mapAddressesToUser(addressInput []*generated.AddressInput) []model.Address {
-	var addresses []model.Address
+func mapAddressesToUser(addressInput []*generated.AddressInput) []*model.Address {
+	var addresses []*model.Address
 
 	for _, addressInput := range addressInput {
-		addresses = append(addresses, model.Address{
+		addresses = append(addresses, &model.Address{
 			AddressLine: addressInput.AddressLine,
 			City:        addressInput.City,
 			Country:     addressInput.Country,
 			PostalCode:  addressInput.PostalCode,
-			UserId:      addressInput.UserID,
 		})
 	}
 

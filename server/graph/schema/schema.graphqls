@@ -15,7 +15,7 @@ type User {
   age: Int!
   email: String!
   phone: String!
-  Address: [Address!]!
+  address: [Address!]!
 }
 
 type Address {
@@ -36,7 +36,6 @@ input AddressInput {
   city: String!
   postalCode: Int!
   country: String!
-  userId: Int!
 }
 
 input UserInput {

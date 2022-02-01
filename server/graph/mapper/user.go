@@ -20,7 +20,7 @@ func Users(users []*model.User) []*generated.User {
 	return out
 }
 
-func mapGeneratedAddressesToUser(addressInput []model.Address) []*generated.Address {
+func mapGeneratedAddressesToUser(addressInput []*model.Address) []*generated.Address {
 	var addresses []*generated.Address
 
 	for _, addressInput := range addressInput {

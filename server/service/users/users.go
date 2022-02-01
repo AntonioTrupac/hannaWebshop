@@ -1,9 +1,9 @@
 package users
 
 import (
-	"fmt"
 	"github.com/AntonioTrupac/hannaWebshop/model"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Service interface {
@@ -32,11 +32,19 @@ func (u *users) GetUsers() ([]*model.User, error) {
 }
 
 func (u *users) CreateAUser(input *model.User) error {
+	return u.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Omit(clause.Associations).Create(input).Error; err != nil {
+			return err
+		}
 
-	if err := u.DB.Create(input).Error; err != nil {
-		fmt.Printf("Error %s, %v", err, input)
-		return err
-	}
+		for _, value := range input.Address {
+			value.UserId = int(input.ID)
+		}
 
-	return nil
+		if err := tx.CreateInBatches(input.Address, 100).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
