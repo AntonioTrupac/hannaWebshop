@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	"github.com/AntonioTrupac/hannaWebshop/model"
+	"github.com/AntonioTrupac/hannaWebshop/util"
 )
 
 func mapAddressesToUser(addressInput []*generated.AddressInput) []*model.Address {
@@ -22,6 +23,9 @@ func mapAddressesToUser(addressInput []*generated.AddressInput) []*model.Address
 }
 
 func ModelUser(ctx context.Context, in generated.UserInput) *model.User {
+
+	util.IsEmailValid(in.Email)
+
 	return &model.User{
 		Email:     in.Email,
 		FirstName: in.FirstName,
