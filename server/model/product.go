@@ -7,7 +7,8 @@ type Product struct {
 	price       float64
 	name        string
 	description string
+	rating      float64
 	stock       int
-	Image       *Image
+	Image       []*Image
 	Tag         []*Tag
 }

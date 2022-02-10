@@ -18,6 +18,35 @@ type AddressInput struct {
 	Country     string `json:"country"`
 }
 
+type Image struct {
+	ID        int    `json:"id"`
+	URL       string `json:"url"`
+	ProductID int    `json:"productId"`
+}
+
+type ImageInput struct {
+	URL string `json:"url"`
+}
+
+type Product struct {
+	ID          int      `json:"id"`
+	Name        string   `json:"name"`
+	Description string   `json:"description"`
+	Price       float64  `json:"price"`
+	Rating      float64  `json:"rating"`
+	Stock       int      `json:"stock"`
+	Image       []*Image `json:"image"`
+}
+
+type ProductInput struct {
+	Name        string        `json:"name"`
+	Description string        `json:"description"`
+	Price       float64       `json:"price"`
+	Rating      float64       `json:"rating"`
+	Stock       int           `json:"stock"`
+	Images      []*ImageInput `json:"images"`
+}
+
 type User struct {
 	ID        int        `json:"id"`
 	FirstName string     `json:"firstName"`

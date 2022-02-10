@@ -1,4 +1,4 @@
-package users
+package service
 
 import (
 	"github.com/AntonioTrupac/hannaWebshop/model"
@@ -10,11 +10,12 @@ type UserService interface {
 	GetUsers() ([]*model.User, error)
 	CreateAUser(input *model.User) error
 }
+
 type users struct {
 	DB *gorm.DB
 }
 
-func New(db *gorm.DB) UserService {
+func NewUsers(db *gorm.DB) UserService {
 	return &users{
 		DB: db,
 	}

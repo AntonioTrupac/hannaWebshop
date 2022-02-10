@@ -1,7 +1,8 @@
 package resolver
 
 import (
-	"github.com/AntonioTrupac/hannaWebshop/service/users"
+	productsService "github.com/AntonioTrupac/hannaWebshop/service/products"
+	usersService "github.com/AntonioTrupac/hannaWebshop/service/users"
 )
 
 // This file will not be regenerated automatically.
@@ -9,11 +10,13 @@ import (
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	users users.Service
+	users    usersService.UserService
+	products productsService.ProductService
 }
 
-func NewResolver(users users.Service) *Resolver {
+func NewResolver(users usersService.UserService, products productsService.ProductService) *Resolver {
 	return &Resolver{
-		users: users,
+		users:    users,
+		products: products,
 	}
 }
