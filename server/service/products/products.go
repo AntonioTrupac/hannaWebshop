@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/AntonioTrupac/hannaWebshop/model"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type ProductService interface {
@@ -32,6 +33,20 @@ func (p products) GetProductById(id int) (*model.Product, error) {
 }
 
 func (p products) CreateAProduct(input *model.Product) error {
-	//TODO implement me
-	panic("implement me")
+
+	return p.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Omit(clause.Associations).Create(input).Error; err != nil {
+			return err
+		}
+
+		for _, value := range input.Image {
+			value.ProductId = int(input.ID)
+		}
+
+		if err := tx.CreateInBatches(input.Image, 100).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
 }

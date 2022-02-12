@@ -4,11 +4,11 @@ import "gorm.io/gorm"
 
 type Product struct {
 	gorm.Model
-	price       float64
-	name        string
-	description string
-	rating      float64
-	stock       int
+	Price       float64
+	Name        string
+	Description string
+	Rating      float64
+	Stock       int
 	Image       []*Image
-	Tag         []*Tag
+	//Tag         []*Tag
 }

@@ -25,7 +25,15 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input generated.UserI
 }
 
 func (r *mutationResolver) CreateProducts(ctx context.Context, input generated.ProductInput) (*generated.Product, error) {
-	panic(fmt.Errorf("not implemented"))
+	product := types.ModelProducts(ctx, input)
+
+	err := r.products.CreateAProduct(product)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return types.GeneratedProduct(product), nil
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*generated.User, error) {
