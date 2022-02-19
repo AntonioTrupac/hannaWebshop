@@ -47,7 +47,13 @@ func (r *queryResolver) Users(ctx context.Context) ([]*generated.User, error) {
 }
 
 func (r *queryResolver) GetProducts(ctx context.Context) ([]*generated.Product, error) {
-	panic(fmt.Errorf("not implemented"))
+	products, err := r.products.GetProducts()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return types.Products(products), nil
 }
 
 func (r *queryResolver) GetProductByID(ctx context.Context, id int) (*generated.Product, error) {

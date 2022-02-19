@@ -5,6 +5,8 @@ import (
 	"github.com/AntonioTrupac/hannaWebshop/model"
 )
 
+// Users map for query get users
+// TODO: need to add return address
 func Users(users []*model.User) []*generated.User {
 	var out []*generated.User
 

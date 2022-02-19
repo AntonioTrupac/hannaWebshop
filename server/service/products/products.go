@@ -23,13 +23,25 @@ func NewProducts(db *gorm.DB) ProductService {
 }
 
 func (p products) GetProducts() ([]*model.Product, error) {
-	//TODO implement me
-	panic("implement me")
+	var products []*model.Product
+
+	if err := p.DB.Preload("Image").Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	//p.DB.Table("products").Joins("left join images")
+
+	return products, nil
 }
 
 func (p products) GetProductById(id int) (*model.Product, error) {
-	//TODO implement me
-	panic("implement me")
+	var product *model.Product
+
+	if err := p.DB.Where("id = ?", id).Find(&product).Error; err != nil {
+		return nil, err
+	}
+
+	return product, nil
 }
 
 func (p products) CreateAProduct(input *model.Product) error {

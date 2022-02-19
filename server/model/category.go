@@ -4,6 +4,5 @@ import "gorm.io/gorm"
 
 type Tag struct {
 	gorm.Model
-	name      string
-	productId int
+	name string
 }
