@@ -25,7 +25,7 @@ func NewProducts(db *gorm.DB) ProductService {
 func (p products) GetProducts() ([]*model.Product, error) {
 	var products []*model.Product
 
-	if err := p.DB.Preload("Image").Find(&products).Error; err != nil {
+	if err := p.DB.Preload("Category").Preload("Image").Find(&products).Error; err != nil {
 		return nil, err
 	}
 

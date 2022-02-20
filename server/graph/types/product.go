@@ -33,6 +33,7 @@ func Products(products []*model.Product) []*generated.Product {
 			Rating:      p.Rating,
 			Stock:       p.Stock,
 			Image:       mapImagesToProducts(p.Image),
+			Category:    mapGeneratedCategoriesToProduct(p.Category),
 		})
 	}
 
