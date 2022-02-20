@@ -80,7 +80,7 @@ func initDB() {
 }
 
 func migrate(db *gorm.DB) error {
-	err := db.Debug().AutoMigrate(&model.User{}, &model.Address{}, &model.Product{}, &model.Image{})
+	err := db.Debug().AutoMigrate(&model.User{}, &model.Address{}, &model.Product{}, &model.Image{}, &model.Category{})
 	if err != nil {
 		return err
 	}

@@ -51,12 +51,18 @@ type Product {
   rating: Float!
   stock: Int!
   image: [Image!]!
+  category: [Category!]!
 }
 
 type Image {
   id: Int!
   url: String!
   productId: Int!
+}
+
+type Category {
+id: Int!
+name: String!
 }
 
 input ProductInput {
@@ -66,10 +72,15 @@ input ProductInput {
   rating: Float!
   stock: Int!
   images: [ImageInput!]!
+  categories: [CategoryInput!]!
 }
 
 input ImageInput {
   url: String!
+}
+
+input CategoryInput {
+  name: String!
 }
 
 type Query {

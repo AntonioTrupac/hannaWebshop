@@ -2,7 +2,6 @@ package types
 
 import (
 	"context"
-	"fmt"
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	"github.com/AntonioTrupac/hannaWebshop/model"
 )
@@ -37,9 +36,31 @@ func Products(products []*model.Product) []*generated.Product {
 		})
 	}
 
-	fmt.Println("OUT OUT OUT", out)
-
 	return out
+}
+
+func mapImagesToProduct(imageInput []*generated.ImageInput) []*model.Image {
+	var images []*model.Image
+
+	for _, input := range imageInput {
+		images = append(images, &model.Image{
+			Url: input.URL,
+		})
+	}
+
+	return images
+}
+
+func mapCategoriesToProduct(categoryInput []*generated.CategoryInput) []*model.Category {
+	var categories []*model.Category
+
+	for _, input := range categoryInput {
+		categories = append(categories, &model.Category{
+			Name: input.Name,
+		})
+	}
+
+	return categories
 }
 
 // ModelProducts => mapping gql input to gorm model fields
@@ -51,6 +72,7 @@ func ModelProducts(ctx context.Context, in generated.ProductInput) *model.Produc
 		Rating:      in.Rating,
 		Stock:       in.Stock,
 		Image:       mapImagesToProduct(in.Images),
+		Category:    mapCategoriesToProduct(in.Categories),
 	}
 }
 
@@ -66,16 +88,16 @@ func mapGeneratedImagesToProduct(imageInput []*model.Image) []*generated.Image {
 	return images
 }
 
-func mapImagesToProduct(imageInput []*generated.ImageInput) []*model.Image {
-	var images []*model.Image
+func mapGeneratedCategoriesToProduct(categoryInput []*model.Category) []*generated.Category {
+	var categories []*generated.Category
 
-	for _, input := range imageInput {
-		images = append(images, &model.Image{
-			Url: input.URL,
+	for _, input := range categoryInput {
+		categories = append(categories, &generated.Category{
+			Name: input.Name,
 		})
 	}
 
-	return images
+	return categories
 }
 
 // GeneratedProduct => mapping model fields to gql schema
@@ -87,5 +109,6 @@ func GeneratedProduct(product *model.Product) *generated.Product {
 		Rating:      product.Rating,
 		Stock:       product.Stock,
 		Image:       mapGeneratedImagesToProduct(product.Image),
+		Category:    mapGeneratedCategoriesToProduct(product.Category),
 	}
 }

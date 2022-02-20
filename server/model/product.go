@@ -10,5 +10,5 @@ type Product struct {
 	Rating      float64
 	Stock       int
 	Image       []*Image
-	//Tag         []*Tag
+	Category    []*Category
 }

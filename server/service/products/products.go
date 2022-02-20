@@ -29,8 +29,6 @@ func (p products) GetProducts() ([]*model.Product, error) {
 		return nil, err
 	}
 
-	//p.DB.Table("products").Joins("left join images")
-
 	return products, nil
 }
 
@@ -56,6 +54,14 @@ func (p products) CreateAProduct(input *model.Product) error {
 		}
 
 		if err := tx.CreateInBatches(input.Image, 100).Error; err != nil {
+			return err
+		}
+
+		for _, categoryValue := range input.Category {
+			categoryValue.ProductId = int(input.ID)
+		}
+
+		if err := tx.CreateInBatches(input.Category, 100).Error; err != nil {
 			return err
 		}
 
