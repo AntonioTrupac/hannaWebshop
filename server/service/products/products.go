@@ -35,7 +35,7 @@ func (p products) GetProducts() ([]*model.Product, error) {
 func (p products) GetProductById(id int) (*model.Product, error) {
 	var product *model.Product
 
-	if err := p.DB.Where("id = ?", id).Find(&product).Error; err != nil {
+	if err := p.DB.Preload("Category").Preload("Image").Where("id = ?", id).Find(&product).Error; err != nil {
 		return nil, err
 	}
 

@@ -3,25 +3,12 @@ package types
 import (
 	"context"
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
+	helpers "github.com/AntonioTrupac/hannaWebshop/graph/types/helpers"
 	"github.com/AntonioTrupac/hannaWebshop/model"
 )
 
-func mapImagesToProducts(images []*model.Image) []*generated.Image {
-	var out []*generated.Image
-
-	for _, i := range images {
-		out = append(out, &generated.Image{
-			URL:       i.Url,
-			ID:        int(i.ID),
-			ProductID: i.ProductId,
-		})
-	}
-
-	return out
-}
-
 // Products map for query get products
-func Products(products []*model.Product) []*generated.Product {
+func GetProductsFromDb(products []*model.Product) []*generated.Product {
 	var out []*generated.Product
 
 	for _, p := range products {
@@ -32,9 +19,25 @@ func Products(products []*model.Product) []*generated.Product {
 			Description: p.Description,
 			Rating:      p.Rating,
 			Stock:       p.Stock,
-			Image:       mapImagesToProducts(p.Image),
+			Image:       helpers.MapImagesToProducts(p.Image),
 			Category:    mapGeneratedCategoriesToProduct(p.Category),
 		})
+	}
+
+	return out
+}
+
+func GetProductFromDb(product *model.Product) *generated.Product {
+	var out *generated.Product
+
+	out = &generated.Product{
+		Price:       product.Price,
+		Name:        product.Name,
+		Description: product.Description,
+		Rating:      product.Rating,
+		Stock:       product.Stock,
+		Image:       helpers.MapImagesToProducts(product.Image),
+		Category:    mapGeneratedCategoriesToProduct(product.Category),
 	}
 
 	return out
@@ -101,7 +104,7 @@ func mapGeneratedCategoriesToProduct(categoryInput []*model.Category) []*generat
 	return categories
 }
 
-// GeneratedProduct => mapping model fields to gql schema
+// GeneratedProduct => returns a product after it is created via mutation CreateProducts
 func GeneratedProduct(product *model.Product) *generated.Product {
 	return &generated.Product{
 		Price:       product.Price,
