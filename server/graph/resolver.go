@@ -12,13 +12,3 @@ import (
 type Resolver struct {
 	DB *gorm.DB
 }
-
-func New(DB *gorm.DB) *Resolver {
-	if DB == nil {
-		panic("DB IS BROKEN")
-	}
-
-	return &Resolver{
-		DB,
-	}
-}

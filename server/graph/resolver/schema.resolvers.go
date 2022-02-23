@@ -5,6 +5,7 @@ package resolver
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	"github.com/AntonioTrupac/hannaWebshop/graph/mapper"
@@ -23,6 +24,18 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input generated.UserI
 	return mapper.GeneratedUser(user), nil
 }
 
+func (r *mutationResolver) CreateProducts(ctx context.Context, input generated.ProductInput) (*generated.Product, error) {
+	product := types.ModelProducts(ctx, input)
+
+	err := r.products.CreateAProduct(product)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return types.GeneratedProduct(product), nil
+}
+
 func (r *queryResolver) Users(ctx context.Context) ([]*generated.User, error) {
 	users, err := r.users.GetUsers()
 
@@ -31,6 +44,20 @@ func (r *queryResolver) Users(ctx context.Context) ([]*generated.User, error) {
 	}
 
 	return mapper.Users(users), nil
+}
+
+func (r *queryResolver) GetProducts(ctx context.Context) ([]*generated.Product, error) {
+	products, err := r.products.GetProducts()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return types.Products(products), nil
+}
+
+func (r *queryResolver) GetProductByID(ctx context.Context, id int) (*generated.Product, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 // Mutation returns generated.MutationResolver implementation.

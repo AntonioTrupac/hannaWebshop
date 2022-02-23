@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"github.com/AntonioTrupac/hannaWebshop/graph/resolver"
 	"github.com/AntonioTrupac/hannaWebshop/model"
-	"github.com/AntonioTrupac/hannaWebshop/service/users"
+	productService "github.com/AntonioTrupac/hannaWebshop/service/products"
+	userService "github.com/AntonioTrupac/hannaWebshop/service/users"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
@@ -19,8 +20,6 @@ import (
 	"github.com/AntonioTrupac/hannaWebshop/graph/generated"
 	logDB "github.com/AntonioTrupac/hannaWebshop/loggers"
 )
-
-const defaultPort = "8080"
 
 var database *gorm.DB
 
@@ -37,8 +36,9 @@ func main() {
 	}
 
 	initDB()
-	usersService := users.New(database)
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver.NewResolver(usersService)}))
+	productsService := productService.NewProducts(database)
+	usersService := userService.NewUsers(database)
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: resolver.NewResolver(usersService, productsService)}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
@@ -80,7 +80,7 @@ func initDB() {
 }
 
 func migrate(db *gorm.DB) error {
-	err := db.AutoMigrate(&model.User{}, &model.Address{})
+	err := db.Debug().AutoMigrate(&model.User{}, &model.Address{}, &model.Product{}, &model.Image{}, &model.Category{})
 	if err != nil {
 		return err
 	}
